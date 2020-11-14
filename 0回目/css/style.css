@@ -1,0 +1,517 @@
+@charset "utf-8";
+
+html {
+    overflow-y: scroll;
+    width: 1366px;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+button,
+table,
+tr,
+th,
+td,
+input,
+label {
+    margin: 0px;
+    padding: 0px;
+}
+
+p {
+    line-height: 27px;
+}
+
+h3 {
+    font-size: 21px;
+}
+
+
+
+body {
+    width: 1365px;
+    margin: 0 auto;
+}
+
+/* headerについて */
+header {
+
+    position: relative;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+
+
+}
+
+.header_img_ps {
+    display: none;
+}
+
+.header1 {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    color: #fff;
+    /* font-size: 48px; */
+    font-size: 3.4vw;
+}
+
+.header2 {
+    position: absolute;
+    top: 60%;
+    left: 24%;
+    color: #fff;
+    /* font-size: 32px; */
+    font-size: 2.3vw;
+}
+
+.header2-sp {
+    display: none;
+}
+
+
+/*====== menuについて =======*/
+
+/* .menu {
+    height: 70px;
+    display: flex;
+    margin: 12px 113px;
+} */
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    margin: 0 113px;
+}
+
+.menu img {
+    width: 200px;
+    height: 42px;
+}
+
+.gmenu {
+    padding: 0px 112px 10px 460px;
+}
+
+.gmenu a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    height: 20px;
+}
+
+.gmenu ul {
+    list-style: none;
+    display: flex;
+}
+
+.gmenu li {
+    font-size: 18px;
+    padding: 0px 32px 0px 0px;
+}
+
+
+
+
+/* =======about について=========*/
+.about h2 {
+    color: #FFD61A;
+
+}
+
+.about {
+    text-align: center;
+    margin: 80px;
+}
+
+.about-p {
+    margin: 24px 0px 64px 0px;
+}
+
+.about-end img {
+    width: 1366px;
+}
+
+.about-end-sp img {
+    display: none;
+}
+
+
+/* course について*/
+.course {
+    text-align: center;
+    margin: 64px 0px;
+}
+
+.course1 img,
+.course2 img,
+.course3 img {
+    width: 682px;
+    height: 460px;
+}
+
+.couerse2-sp {
+    display: none;
+}
+
+.course-p {
+    margin: 24px 0px 32px 0px;
+    font-size: 18px;
+}
+
+.course1 {
+    display: flex;
+}
+
+.couerse1-1 {
+    background-color: #FAFAFA;
+    padding: 135px 114px 148px 48px;
+}
+
+.couerse1-1 h3 {
+    padding: 0px 0px 40px 0px;
+}
+
+.course2 {
+    display: flex;
+    height: 460px;
+}
+
+.couerse2-1 {
+    background-color: #FAFAFA;
+    padding: 135px 48px 140px 114px;
+
+}
+
+.couerse2-1 h3 {
+    padding: 0px 0px 40px 0px;
+}
+
+.course3 {
+    display: flex;
+}
+
+.couerse3-1 {
+    background-color: #FAFAFA;
+    padding: 135px 114px 12px 48px;
+}
+
+.couerse3-1 h3 {
+    padding: 0px 0px 40px 0px;
+}
+
+
+
+
+/* =====ＮＥＷＳについて========= */
+.news {
+    margin: 96px 113px 64px;
+}
+
+.news h2 {
+    color: #FFD61A;
+}
+
+.news-title {
+    text-align: center;
+}
+
+.news-title p {
+    margin: 24px 0px 64px 0px;
+}
+
+.news-list {
+    display: flex;
+}
+
+.news-list ul {
+    display: flex;
+    list-style: none;
+}
+
+.news-list li {
+    margin: 0px 12px;
+}
+
+
+.news-list img {
+    width: 364px;
+    height: 243px;
+}
+
+.news-list h3 {
+    font-size: 16px;
+    margin: 24px 16px;
+}
+
+.news-list p {
+    padding: 0px 20px 16px 16px;
+}
+
+.time {
+    color: #999999;
+    font-size: 14px;
+}
+
+.news button {
+    background-color: #FFD61A;
+    color: #FAFAFA;
+    width: 264px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+
+
+}
+
+.news-button {
+    text-align: center;
+    margin: 24px 0px;
+}
+
+
+
+/* =====acceessについて====== */
+.acceess {
+    background-color: #FAFAFA;
+    text-align: center;
+
+}
+
+.acceess h2 {
+    padding: 65px 0px 24px 0px;
+}
+
+.acceess iframe {
+    padding: 40px 0px 64px 0px;
+}
+
+.acceess table {
+    margin: 0px auto;
+    padding: 0px 0px 80px;
+}
+
+.acceess th {
+    text-align: right;
+    padding: 0px 0px 21px 0px;
+}
+
+.acceess td {
+    text-align: left;
+    color: #707070;
+    padding: 0px 0px 21px 24px;
+}
+
+/* .map-sp {
+    display: none;
+} */
+
+
+/* ====ここからcontact=== */
+
+.contact h2 {
+    text-align: center;
+}
+
+.contact p {
+    text-align: center;
+}
+
+.contact table {
+    margin: 0 auto;
+}
+
+.contact-title {
+    margin: 0px 0px 48px 0px;
+}
+
+.contact h2 {
+    padding: 64px 0px 24px 0px;
+}
+
+.contact form {
+    margin: 64px 0px;
+}
+
+.contact-table-td input,
+.contact-table-td textarea {
+    width: 388px;
+    height: 40px;
+    border: #AAAAAA 1px solid;
+}
+
+.contact-table-td textarea {
+    width: 388px;
+    height: 200px;
+}
+
+input[type*="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    /* border: solid 1px #EEEEEE; */
+    background-color: #EEEEEE;
+    border-radius: 50%;
+    vertical-align: -2px;
+    margin: 0 10px 0 0;
+}
+
+input[type*="radio"]:checked {
+    background-color: #FFD61A;
+}
+
+.font-parts {
+    box-sizing: border-box;
+    font-size: 1.6em;
+    padding: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.input {
+    text-align: center;
+    padding: 16px 0px 56px 0px;
+}
+
+.input input {
+
+    background-color: #FFD61A;
+    color: #FAFAFA;
+    width: 264px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+}
+
+.contact-table th {
+    text-align: right;
+    padding: 0px 0px 24px 0px;
+}
+
+.contact-table-td {
+    padding: 0px 115px 24px 24px;
+}
+
+.radio {
+    font-size: 14px;
+    padding: 13px 0px 24px 24px;
+}
+
+.radio ul {
+    list-style: none;
+
+}
+
+#up {
+    padding-bottom: 134px;
+}
+
+
+/* フッター */
+footer {
+
+    background-color: #707070;
+    color: #fff;
+}
+
+.footer {
+    height: 80px;
+    position: relative;
+}
+
+.footer small {
+    text-align: center;
+    font-size: 14px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+}
+
+.icon-up {
+    color: #FFD61A;
+
+}
+
+.footer-icon {
+    position: relative;
+}
+
+.btn-pagetop {
+    position: absolute;
+    top: -78px;
+    right: 70px;
+    display: block;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}
+
+.icon-sp {
+    display: none;
+}
+
+/* ======news-page========== */
+.news-page {
+    display: none;
+    text-align: center;
+    font-size: 100px;
+    padding: 200px;
+    letter-spacing: 0.2em;
+
+    color: #ffd61a;
+    text-shadow: 3px 3px 0px #000000,
+        -3px 3px 0px #000000,
+        3px -3px 0px #000000,
+        -3px -3px 0px #000000,
+        3px 0px 0px #000000,
+        0px 3px 0px #000000,
+        -3px 0px 0px #000000,
+        0px -3px 0px #000000;
+}
+
+
+/* ーーーーーー↑↑↑↑↑ここまでＰＣ版↑↑↑↑ーーーーーーー */
+
+
+/* @media screen and (max-width:640px) {
+
+※この中にスマホ版のときのCSSを書き込む！
+
+
+    * {
+        border: solid 1px red;
+    }
+
+    .menu {
+        display: none;
+    }
+} */

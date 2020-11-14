@@ -1,0 +1,456 @@
+@charset "UTF-8";
+
+
+
+body,
+header,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+img,
+tr,
+th,
+td,
+input,
+iframe {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+h2 {
+    font-size: 27px;
+}
+
+body {
+    font-size: 16px;
+}
+
+
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========ヘッダー（メニュ消した）===================== */
+
+header img {
+    /* width: 375px; */
+    height: 375px;
+
+}
+
+.header_img {
+    display: none;
+}
+
+.hero-image {
+    margin-top: 75px;
+}
+
+.header1 {
+    position: absolute;
+    top: 25%;
+    left: 5%;
+    /* -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header2 {
+    display: none;
+}
+
+.header2-sp {
+    position: absolute;
+    top: 33%;
+    left: 35%;
+    color: #fff;
+    font-size: 16px;
+    width: 144px;
+    text-align: center;
+}
+
+.menu-img {
+    width: 250px;
+    padding: 15px 15px 5px;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #FFD61A;
+
+}
+
+.gmenu {
+    display: none;
+}
+
+
+/* ハンバーガーメニュー */
+/* 
+
+.nav-list {
+    padding: 84px 0 0;
+}
+
+.gmenu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(253, 251, 120, 0.8);
+}
+
+.nav-list li {
+    margin-bottom: 60px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+
+}
+
+.nav-list>a {
+    text-decoration: none;
+} */
+
+
+
+/* =========about===================== */
+#about,
+.about-p {
+    text-align: center;
+}
+
+.about h2 {
+    color: #FFD61A;
+
+}
+
+.about {
+    margin: 40px 10px 64px;
+}
+
+.about-p {
+    margin: 16px 0px 40px;
+}
+
+.about-end img {
+    display: none;
+}
+
+/* .about-end-sp {
+    display: flex;
+} */
+
+/* .about-end-sp img {
+    width: 188px;
+    height: 178px;
+} */
+
+/* =============course==================== */
+
+.course1 img,
+.course2 img,
+.course3 img {
+    width: 375px;
+    height: 253px;
+}
+
+.couerse2-pc {
+    display: none;
+}
+
+.course {
+    margin: 64px 10px 64px;
+}
+
+.course h2 {
+    text-align: center;
+}
+
+.course-p {
+    text-align: center;
+    margin: 16px 0px 40px;
+}
+
+h3 {
+    margin: 24px 10px;
+}
+
+.couerse1-1 p,
+.couerse2-1 p,
+.couerse3-1 p {
+    margin: 0px 10px 40px;
+    font-size: 16px;
+}
+
+.course-detail {
+    background-color: #FAFAFA;
+}
+
+.couerse3-1 p {
+    padding-bottom: 40px;
+}
+
+/* =============news==================== */
+.news-title {
+    text-align: center;
+}
+
+.news-title h2 {
+    color: #FFD61A;
+}
+
+.news-title p {
+    margin: 16px 0px 40px;
+}
+
+.news-list img {
+    width: 375px;
+    height: 250px;
+}
+
+.news-list p {
+    margin: 0px 10px 16px;
+}
+
+.time {
+    color: #999999;
+    font-size: 14px;
+}
+
+.news button {
+    background-color: #FFD61A;
+    color: #FAFAFA;
+    width: 264px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+}
+
+.news-button {
+    text-align: center;
+    margin: 40px 0px;
+}
+
+.acceess {
+    background-color: #FAFAFA;
+}
+
+.acceess h2 {
+    text-align: center;
+    padding: 40px 0px 16px;
+}
+
+.acceess p {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+/* .map {
+    display: none;
+
+} */
+
+
+.acceess table th {
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+.acceess table td {
+    width: 100%;
+    display: block;
+    color: #707070;
+    margin: 15px 0px 40px;
+}
+
+.acceess table {
+    margin: 40px 10px 0px 10px;
+}
+
+.acceess iframe {
+    width: 375px;
+}
+
+/* ====ここからcontact=== */
+.contact {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contact h2 {
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 40px;
+}
+
+.contact-title {
+    text-align: center;
+    margin: 24px 0px 44px 0px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contact p {
+    margin: 0px 10px 60px;
+}
+
+.contact table th {
+    width: 100%;
+
+    box-sizing: border-box;
+    display: block;
+    text-align: left;
+    padding: 0px 10px;
+}
+
+.contact table td {
+    width: 100%;
+
+    box-sizing: border-box;
+    display: block;
+    color: #707070;
+    margin: 24px 0px 40px;
+    padding: 0px 5px;
+}
+
+.contact-table-td input,
+.contact-table-td textarea {
+    /* width: 354px; */
+    height: 40px;
+    border: #AAAAAA 1px solid;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.radio ul {
+    list-style: none;
+}
+
+.radio label {
+    font-size: 14px;
+}
+
+.contact-table-td textarea {
+    /* width: 354px; */
+    height: 200px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type*="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    /* border: solid 1px #EEEEEE; */
+    background-color: #EEEEEE;
+    border-radius: 50%;
+    vertical-align: -4px;
+    margin: 0 10px 0 0;
+}
+
+input[type*="radio"]:checked {
+    background-color: #FFD61A;
+}
+
+.input {
+    text-align: center;
+    padding: 16px 0px 64px 0px;
+    margin-bottom: 30px;
+}
+
+.input input {
+
+    background-color: #FFD61A;
+    color: #FAFAFA;
+    width: 264px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+}
+
+.font-parts {
+    box-sizing: border-box;
+    font-size: 1.6em;
+    padding: 8px;
+}
+
+/* ============footer========== */
+
+footer {
+
+    background-color: #707070;
+    color: #fff;
+}
+
+.footer {
+    height: 80px;
+    position: relative;
+}
+
+.footer small {
+    text-align: center;
+    font-size: 14px;
+    width: 65%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+}
+
+.icon-up {
+    color: #FFD61A;
+
+}
+
+.footer-icon {
+    position: relative;
+}
+
+.btn-pagetop {
+    position: absolute;
+    top: -45px;
+    right: 15px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.icon-pc {
+    display: none;
+}
+
+/* * {
+    border: solid 1px red;
+} */
