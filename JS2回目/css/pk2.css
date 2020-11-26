@@ -1,0 +1,258 @@
+body {
+    background: url('../img/22497673051_bc5020db12_b.jpg');
+
+    backdrop-filter: blur(2px);
+
+    background-size: cover;
+    background-position: center;
+
+    /* background-size: contain; */
+    background-repeat: no-repeat;
+    height: 550px;
+
+
+}
+
+main {
+    max-width: 700px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+/* ---------------section1------------- */
+
+
+.s1 {
+    justify-content: center;
+    align-items: center;
+
+}
+
+.boder {
+    margin: 0 auto;
+    display: flex;
+    border: solid 2px black;
+    width: 500px;
+    height: 110px;
+    background-color: rgb(179, 177, 177);
+}
+
+.s1_img img {
+    height: 110px;
+}
+
+.s1_table {
+    margin: 5px auto;
+    color: aliceblue;
+}
+
+th {
+    margin: 3px;
+    border-bottom: solid 1px black;
+    border-right: solid 1px black;
+    padding: 5px 15px;
+
+}
+
+td {
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
+    padding: 5px 15px;
+}
+
+.fctokyo {
+    display: flex;
+    letter-spacing: 0.1em;
+}
+
+.blue {
+    color: blue;
+}
+
+.red {
+    color: red;
+}
+
+/* .counter {
+    display: flex;
+} */
+
+/* ---------------section2------------- */
+.s2 {
+    margin: 20px 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.hand {
+    /* position: fixed;
+    top: 28%;
+    right: 53%; */
+    width: 250px;
+    font-weight: bold;
+    font-size: 20px;
+    border: solid 2px blue;
+    border-radius: 15px;
+
+    padding: 3px 3px 3px 15px;
+}
+
+.judg {
+    /* position: fixed;
+    top: 28%;
+    right: 26%; */
+    width: 300px;
+    font-weight: bold;
+    font-size: 21px;
+    border: solid 2px red;
+    border-radius: 15px;
+    margin: 0 15px;
+    padding: 3px 3px 3px 15px;
+}
+
+.next {
+    text-align: right;
+    padding-right: 10px;
+}
+
+/* ---------------section3------------- */
+.s3 {
+    justify-content: center;
+    align-items: center;
+
+}
+
+.s3_img {
+    padding: 0 60px;
+}
+
+.shoot {
+    display: flex;
+    padding: 0 163px;
+}
+
+.shoot img {
+    width: 80px;
+
+}
+
+button {
+    background-color: blue;
+    border-radius: 15px;
+    margin: 0 15px;
+}
+
+
+/* =====================
+	電光掲示板
+======================= */
+.ledText {
+    display: none;
+    overflow: hidden;
+    position: relative;
+    padding: 2px 0;
+    color: #FFB400;
+    font-size: 30px;
+    font-weight: bold;
+    background: #333333;
+}
+
+/* CSS3グラデーションでドット感を出す */
+/* .ledText:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(#0a0600 1px, transparent 0px), linear-gradient(0, #0a0600 1px, transparent 1px);
+    background-image: -webkit-linear-gradient(#0a0600 1px, transparent 0px), -webkit-linear-gradient(0, #0a0600 1px, transparent 1px);
+    background-size: 2px 2px;
+    z-index: 10;
+} */
+
+/* CSS3アニメーションでスクロール */
+#goooal {
+
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+
+    animation-name: marquee;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 7s;
+}
+
+@-webkit-keyframes marquee {
+    from {
+        -webkit-transform: translate(0%);
+    }
+
+    99%,
+    to {
+        -webkit-transform: translate(-100%);
+    }
+}
+
+@-moz-keyframes marquee {
+    from {
+        -moz-transform: translate(0%);
+    }
+
+    99%,
+    to {
+        -moz-transform: translate(-100%);
+    }
+}
+
+@keyframes marquee {
+    from {
+        transform: translate(0%);
+    }
+
+    99%,
+    to {
+        transform: translate(-100%);
+    }
+}
+
+
+
+/* 5回戦が終わったあとの表示 */
+.more button {
+    color: aliceblue;
+    margin: 30px auto;
+    width: 300px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.more {
+    text-align: center;
+}
+
+.game {
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    width: 650px;
+}
+
+/* ======================================== */
+
+.sec0 {
+    display: flex;
+}
+
+.game_count {
+    display: flex;
+}

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics</title>
+    <link rel="stylesheet" href="./css/Analytics.css">
+    <script src="js/jquery-2.1.3.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>FC東京 PK戦 データ分析</h1>
+    </header>
+    <main>
+        <div class="flex">
+            <section class="sec1">
+                <h2 class="sec_h2">【ゲーム結果】</h2>
+                <table id="list" class="table">
+                    <!-- 勝敗のデータが挿入される -->
+                </table>
+            </section>
+            <section class="sec2">
+                <!-- <table>
+                    <tr>
+                        <th>勝率（％）</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>win</td>
+                        <td id="win"></td>
+                    </tr>
+                    <tr>
+                        <td>lose</td>
+                        <td id="lose"></td>
+                    </tr>
+                    <tr>
+                        <td>draw</td>
+                        <td id="draw"></td>
+                    </tr>
+                </table> -->
+
+                <h2 class="h2">【勝率】</h2>
+                <div class="graph">
+
+
+                    <div class="chart-box">
+                        <h3>勝った確率</h3>
+                        <div class="simple-pie-chart">
+                            <div class="chart-meter"></div>
+                            <div class="chart-value">
+                                <p><span class="percent-val"></span>%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <h3>負けた確率</h3>
+                        <div class="simple-pie-chart2">
+                            <div class="chart-meter2"></div>
+                            <div class="chart-value">
+                                <p><span class="percent-val2"></span>%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <h3>引き分けた確率</h3>
+                        <div class="simple-pie-chart3">
+                            <div class="chart-meter3"></div>
+                            <div class="chart-value">
+                                <p><span class="percent-val3"></span>%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+
+    <script>
+        // ＝＝＝＝＝＝＝＝＝＝試合数と勝敗を表示する＝＝＝＝＝＝＝＝＝＝＝
+        var win = "win";
+        var lose = "lose";
+        var draw = "draw";
+
+        var win_count = 0;
+        var lose_count = 0;
+        var draw_count = 0;
+
+
+        for (let i = 1; i < localStorage.length; i++) {
+
+            localStorage.setItem("ゲーム数", i);
+            const key = localStorage.getItem(i);
+            const val = localStorage.getItem("ゲーム数");
+
+            if (key == null) {
+                const h = '<tr><th>game数</th><td>結果</td></tr>';
+                $("#list").prepend(h);
+            } else {
+                const h = '<tr><th>' + val + '</th><td>' + key + '</td></tr>';
+                $("#list").append(h);
+            }
+
+            if (key == win) {
+                win_count++;
+                // console.log("win_pa ha? " + win_pa);
+            } else if (key == lose) {
+                lose_count++;
+            } else if (key == draw) {
+                draw_count++;
+            }
+
+
+        }
+
+        //＝＝＝＝＝＝＝＝勝率を計算する＝＝＝＝＝＝＝＝＝＝
+        //勝った確率 勝ち÷"ゲーム数－１"もしくは（localStorage.length -2）×100
+
+        // console.log("win_pa ha? " + win_count); //4
+        // console.log("lose_pa ha? " + lose_count);
+        // console.log("draw_pa ha? " + draw_count);
+
+        var game_count = (localStorage.getItem("ゲーム数")) - 1;
+
+        // console.log("game_count ha" + game_count);
+
+        var win_pa = Math.round(win_count / game_count * 100);
+        $("#win").text(win_pa);
+
+        var lose_pa = Math.round(lose_count / game_count * 100);
+        $("#lose").text(lose_pa);
+
+        var draw_pa = Math.round(draw_count / game_count * 100);
+        $("#draw").text(draw_pa);
+
+        // console.log("win_pa は" + win_pa);
+
+
+
+        $(function () {
+            var angle = win_pa * 3.6;
+
+            // 中心のテキストに「〇〇%」を表示させる
+            $(this).find('.percent-val').append(win_pa);
+
+            // 180 度より大きい場合は背景色を反転する
+            if (angle > 180) {
+                $(this).find('.chart-meter').addClass('inversion');
+            }
+            // 算出した角度を要素に反映する
+            $(this).find('.chart-meter').css('transform', 'rotate(' + angle + 'deg)');
+            console.log(angle);
+        });
+
+        $(function () {
+            var angle2 = lose_pa * 3.6;
+
+            // 中心のテキストに「〇〇%」を表示させる
+            $(this).find('.percent-val2').append(lose_pa);
+
+            // 180度より大きい場合は背景色を反転する
+            if (angle2 > 180) {
+                $(this).find('.chart-meter2').addClass('inversion');
+            }
+            // 算出した角度を要素に反映する
+            $(this).find('.chart-meter2').css('transform', 'rotate(' + angle2 + 'deg)');
+            console.log(angle2);
+        });
+        $(function () {
+            var angle3 = draw_pa * 3.6;
+
+            // 中心のテキストに「〇〇%」を表示させる
+            $(this).find('.percent-val3').append(draw_pa);
+
+            if (angle3 > 180) {
+                $(this).find('.chart-meter2').addClass('inversion');
+            }
+
+            // 算出した角度を要素に反映する
+            $(this).find('.chart-meter3').css('transform', 'rotate(' + angle3 + 'deg)');
+            console.log(angle3);
+        });
+    </script>
+
+    <!-- 
+https://tanehayasu.com/web-create/css-pie-chart/#toc1 -->
+</body>
+
+</html>

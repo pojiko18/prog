@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ＰＫ戦 5試合</title>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/pk2.css">
+</head>
+
+<body>
+    <header>
+
+    </header>
+
+    <main>
+        <div class="sec0">
+            <section class="sec1">
+                <div class="restorable" data-original="hogehage">
+                    <section class="s1">
+                        <div class="game_count">試合数：<div id="number">0</div>回目</div>
+
+                        <div class="boder">
+                            <div class="s1_img"><img src="./img/ajisuta_keijiban.jpg" alt=""></div>
+                            <div class="s1_table">
+                                <table>
+                                    <tr>
+                                        <th></th>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>合計得点</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <div class="fctokyo">
+                                                <div class="blue">Ｆ</div>
+                                                <div class="red">Ｃ</div>
+                                                <div class="blue">東</div>
+                                                <div class="red">京</div>
+                                            </div>
+                                        </th>
+                                        <td id="f1"></td>
+                                        <td id="f2"></td>
+                                        <td id="f3"></td>
+                                        <td id="f4"></td>
+                                        <td id="f5"></td>
+                                        <td id="f_total"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>相手</th>
+                                        <td id="p1"></td>
+                                        <td id="p2"></td>
+                                        <td id="p3"></td>
+                                        <td id="p4"></td>
+                                        <td id="p5"></td>
+                                        <td id="p_total"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- <div class="counter">
+                <p>蹴った回数: </p>
+                <div id="c_up">0</div>
+            </div>
+            <div class="counter">
+                <p>ゴール数: </p>
+                <div id="goal">0</div>
+            </div>
+            <div class="counter">
+                <p>相手のゴール数: </p>
+                <div id="p_goal">0</div>
+            </div> -->
+                    </section>
+
+                    <section class="s2" id="s2">
+                        <div class="hand">キーパーの反応 : <span id="pc_hands"></span></div>
+                        <div class="judg">判定 :
+                            <span id="judgment"></span></div>
+                        <!-- <p class="ledText">
+                    <span id="goooal">GOOOOOOOOOAL!!!</span>
+                </p> -->
+                    </section>
+
+                    <section class=" s3">
+                        <div class="s3_img">
+                            <img src="./img/image_pk_diego2.png" alt="">
+                        </div>
+
+                        <ul class="shoot">
+                            <li id="left"><button><img src="./img/left_icon.png" alt=""></button></li>
+                            <li id="center"><button><img src="./img/up_icon.png" alt=""></button></li>
+                            <li id="right"><button><img src="./img/icon.png" alt=""></button></li>
+                        </ul>
+
+                    </section>
+                </div>
+
+                <p id="more" class="next">＞ゲームをやり直す</p>
+            </section>
+
+        </div>
+    </main>
+    <footer>
+    </footer>
+
+
+    <script>
+        $("#more").on("click", function () {
+            location.reload();
+        });
+
+
+        var number = ""; //試合数
+        var up = 0; //蹴った回数
+        var goal = 0; //ＦＣ東京のゴールが決まった回数
+        var p_goal = 0; //パソコンのゴール回数
+
+        // ＝＝＝＝＝＝＝＝＝試合数カウント＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+
+
+
+
+        // !--１＝左（ グー）、２＝ 正面（ チョキ）、３＝ 右（ パー）
+
+        // ＝＝＝＝＝＝＝＝＝＝左にキックしたら＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        $("#left").on("click", function () {
+
+            // ランダムでGKの動きを出して、ゴールしたか判断する
+            const r = Math.ceil(Math.random() * 3);
+            if (r == 1) {
+                $("#pc_hands").html("左");
+                $("#judgment").html("キーパー セーブ").css('color', 'blue');
+            }
+
+            if (r == 2) {
+                $("#pc_hands").html("正面");
+                $("#judgment").html("GOOOOOAL !!!").css({
+                    'color': 'red',
+                    'text-shadow': '1px 1px 0 #000'
+                });
+
+                goal += 1;
+                $("#goal").html(goal);
+
+            }
+            if (r == 3) {
+                $("#pc_hands").html("右");
+                $("#judgment").html("GOOOOOAL !!!").css({
+                    'color': 'red',
+                    'text-shadow': '1px 1px 0 #000'
+                });
+
+                goal += 1;
+                $("#goal").html(goal);
+            }
+
+            // 蹴った回数
+            up += 1;
+            $("#c_up").html(up);
+
+            // 得点板＝＝＝＝＝＝＝＝＝＝＝
+            if (up == 1 && r != 1) {
+                $("#f1").html("〇");
+            } else if (up == 1 && r == 1) {
+                $("#f1").html("✖");
+            }
+
+            if (up == 2 && r != 1) {
+                $("#f2").html("〇");
+            } else if (up == 2 && r == 1) {
+                $("#f2").html("✖");
+            }
+
+            if (up == 3 && r != 1) {
+                $("#f3").html("〇");
+            } else if (up == 3 && r == 1) {
+                $("#f3").html("✖");
+            }
+            if (up == 4 && r != 1) {
+                $("#f4").html("〇");
+            } else if (up == 4 && r == 1) {
+                $("#f4").html("✖");
+            }
+            if (up == 5 && r != 1) {
+                $("#f5").html("〇");
+            } else if (up == 5 && r == 1) {
+                $("#f5").html("✖");
+            }
+
+            // ＦＣ東京のゴール数
+            if (up == 5) {
+                $("#f_total").html(goal);
+            }
+
+            // ========ランダムでＰＣがＰＫする
+            const p_kick = Math.ceil(Math.random() * 2);
+            if (p_kick == 1 && up == 1) {
+
+                setTimeout(function () {
+                    $("#p1").html("〇");
+                }, 1000);
+
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 1) {
+                setTimeout(function () {
+                    $("#p1").html("✖");
+                }, 1000);
+            }
+            if (p_kick == 1 && up == 2) {
+                setTimeout(function () {
+                    $("#p2").html("〇");
+                }, 1000);
+
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 2) {
+                setTimeout(function () {
+                    $("#p2").html("✖");
+                }, 1000);
+            }
+
+            if (p_kick == 1 && up == 3) {
+                setTimeout(function () {
+                    $("#p3").html("〇");
+                }, 1000);
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 3) {
+                setTimeout(function () {
+                    $("#p3").html("✖");
+                }, 1000);
+            }
+            if (p_kick == 1 && up == 4) {
+                setTimeout(function () {
+                    $("#p4").html("〇");
+                }, 1000);
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 4) {
+                setTimeout(function () {
+                    $("#p4").html("✖");
+                }, 1000);
+            }
+            if (p_kick == 1 && up == 5) {
+                setTimeout(function () {
+                    $("#p5").html("〇");
+                }, 1000);
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 5) {
+                setTimeout(function () {
+                    $("#p5").html("✖");
+                }, 1000);
+            }
+
+            // 相手のゴール数
+            if (up == 5) {
+                setTimeout(function () {
+                    $("#p_total").html(p_goal);
+                }, 1500);
+            }
+
+            // ＝＝＝＝＝5回戦まで終わったら
+            if (up == 5) {
+
+                if (goal > p_goal) {
+                    setTimeout(function () {
+                        localStorage.setItem(number - 1, "win");
+                        $(".restorable").html(
+                            '<p class="game">勝利！</p>'
+                        );
+                    }, 1000);
+                } else if (goal < p_goal) {
+                    setTimeout(function () {
+                        localStorage.setItem(number - 1, "lose");
+                        $(".restorable").html(
+                            '<p class="game">負け</p>'
+                        );
+                    }, 1000);
+                } else {
+                    setTimeout(function () {
+                        localStorage.setItem(number - 1, "draw");
+                        $(".restorable").html(
+                            '<p class="game">サドンデス！</p>'
+                        );
+                    }, 1000);
+                }
+            }
+        });
+
+        // ↑＝＝＝＝＝＝＝＝＝＝左にキックしたら＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝↑
+
+
+        // ＝＝＝＝＝＝＝＝＝＝もし正面にキックしたら＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        $("#center").on("click",
+            function () {
+                // ランダムでGKの動きを出して、ゴールしたか判断する 
+                const r = Math.ceil(Math.random() * 3);
+                if (r == 1) {
+                    $("#pc_hands").html("左");
+                    $("#judgment").html("GOOOOOAL !!!").css({
+                        'color': 'red',
+                        'text-shadow': '1px 1px 0 #000'
+                    });
+                    goal += 1;
+                    $("#goal").html(goal);
+                }
+                if (r == 2) {
+                    $("#pc_hands").html("正面");
+                    $("#judgment").html("キーパー セーブ").css('color', 'blue');
+                }
+
+                if (r == 3) {
+                    $("#pc_hands").html("右");
+                    $("#judgment").html("GOOOOOAL !!!").css({
+                        'color': 'red',
+                        'text-shadow': '1px 1px 0 #000'
+                    });
+                    goal += 1;
+                    $("#goal").html(goal);
+                }
+                // 蹴った回数を表示 
+                up += 1;
+                $("#c_up").html(up);
+
+                // 得点板＝＝＝＝＝＝＝＝＝＝＝
+                if (up == 1 && r != 2) {
+                    $("#f1").html("〇");
+                } else if (up == 1 && r == 2) {
+                    $("#f1").html("✖");
+                }
+                if (up == 2 && r != 2) {
+                    $("#f2").html("〇");
+                } else if (up == 2 && r == 2) {
+                    $("#f2").html("✖");
+                }
+                if (up == 3 && r != 2) {
+                    $("#f3").html("〇");
+                } else if (up == 3 && r == 2) {
+                    $("#f3").html("✖");
+                }
+                if (up == 4 && r != 2) {
+                    $("#f4").html("〇");
+                } else if (up == 4 && r == 2) {
+                    $("#f4").html("✖");
+                }
+                if (up == 5 && r != 2) {
+                    $("#f5").html("〇");
+                } else if (up == 5 &&
+                    r == 2) {
+                    $("#f5").html("✖");
+                }
+
+
+                // ＦＣ東京のゴール数 
+                if (up == 5) {
+                    $("#f_total").html(goal);
+                }
+
+                //========ランダムでＰＣがＰＫする 
+                const p_kick = Math.ceil(Math.random() * 2);
+                if (p_kick == 1 && up == 1) {
+                    setTimeout(function () {
+                        $("#p1").html("〇");
+                    }, 1000);
+
+                    p_goal += 1;
+                    $("#p_goal").html(p_goal);
+                } else if (p_kick == 2 && up == 1) {
+                    setTimeout(function () {
+                        $("#p1").html("✖");
+                    }, 1000);
+                }
+                if (p_kick == 1 && up == 2) {
+                    setTimeout(function () {
+                        $("#p2").html("〇");
+                    }, 1000);
+                    p_goal += 1;
+                    $("#p_goal").html(p_goal);
+                } else if (p_kick == 2 && up == 2) {
+                    setTimeout(function () {
+                        $("#p2").html("✖");
+                    }, 1000);
+                }
+                if (p_kick == 1 && up == 3) {
+                    setTimeout(function () {
+                        $("#p3").html("〇");
+                    }, 1000);
+                    p_goal += 1;
+                    $("#p_goal").html(p_goal);
+                } else if (p_kick == 2 && up == 3) {
+                    setTimeout(function () {
+                        $("#p3").html("✖");
+                    }, 1000);
+                }
+                if (p_kick == 1 && up == 4) {
+                    setTimeout(function () {
+                        $("#p4").html("〇");
+                    }, 1000);
+                    p_goal += 1;
+                    $("#p_goal").html(p_goal);
+                } else if (p_kick == 2 && up == 4) {
+                    setTimeout(function () {
+                        $("#p4").html("✖");
+                    }, 1000);
+                }
+                if (p_kick == 1 && up == 5) {
+                    setTimeout(function () {
+                        $("#p5").html("〇");
+                    }, 1000);
+                    p_goal += 1;
+                    $("#p_goal").html(p_goal);
+                } else if (p_kick == 2 && up == 5) {
+                    setTimeout(function () {
+                        $("#p5").html("✖");
+                    }, 1000);
+                }
+
+                // 相手のゴール数 
+                if (up == 5) {
+                    setTimeout(function () {
+                            $("#p_total").html(p_goal);
+                        },
+                        1500);
+                }
+                // ＝＝＝＝＝5回戦まで終わったら 
+                if (up == 5) {
+                    if (goal > p_goal) {
+                        localStorage.setItem(number - 1, "win");
+                        setTimeout(function () {
+                            $(".restorable").html(
+                                '<p class="game">勝利！</p>'
+                            );
+                        }, 1000);
+                    } else if (goal < p_goal) {
+                        setTimeout(function () {
+                            localStorage.setItem(number - 1, "lose");
+                            $(".restorable").html(
+                                '<p class="game">負け</p>'
+                            );
+                        }, 1000);
+                    } else {
+                        setTimeout(function () {
+                            localStorage.setItem(number - 1, "draw");
+                            $(".restorable").html(
+                                '<p class="game">サドンデス！</p>'
+                            );
+                        }, 1000);
+                    }
+                }
+
+            });
+        //↑＝＝＝＝＝＝＝＝＝＝もし正面にキックしたら＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝↑ 
+
+
+        // ＝＝＝＝＝＝＝＝＝＝右にキックしたら＝＝＝＝＝＝＝＝＝＝＝ー＝＝＝＝＝＝＝
+        $("#right").on("click", function () {
+
+            // ランダムでGKの動きを出して、ゴールしたか判断する 
+            const r = Math.ceil(Math.random() * 3);
+            if (r == 1) {
+                $("#pc_hands").html("左");
+                $("#judgment").html("GOOOOOAL !!!").css({
+                    'color': 'red',
+                    'text-shadow': '1px 1px 0 #000'
+                });
+                goal += 1;
+                $("#goal").html(goal);
+            }
+            if (r == 2) {
+                $("#pc_hands").html("正面");
+                $("#judgment").html("GOOOOOAL !!!").css({
+                    'color': 'red',
+                    'text-shadow': '1px 1px 0 #000'
+                });
+                goal += 1;
+                $("#goal").html(goal);
+            }
+            if (r == 3) {
+                $("#pc_hands").html("右");
+                $("#judgment").html("キーパー セーブ").css('color', 'blue');
+            }
+
+
+
+            // 蹴った回数を表示 
+            up += 1;
+            $("#c_up").html(up);
+
+            // 得点板＝＝＝＝＝＝＝＝＝＝＝
+            if (up == 1 && r != 3) {
+                $("#f1").html("〇");
+            } else if (up == 1 && r == 3) {
+                $("#f1").html("✖");
+            }
+            if (up == 2 && r != 3) {
+                $("#f2").html("〇");
+            } else if (up == 2 && r == 3) {
+                $("#f2").html("✖");
+            }
+            if (up == 3 && r !=
+                3) {
+                $("#f3").html("〇");
+            } else if (up == 3 && r == 3) {
+                $("#f3").html("✖");
+            }
+            if (up == 4 && r != 3) {
+                $("#f4").html("〇");
+            } else if (up == 4 && r == 3) {
+                $("#f4").html("✖");
+            }
+            if (up == 5 && r != 3) {
+                $("#f5").html("〇");
+            } else if (up == 5 && r == 3) {
+                $("#f5").html("✖");
+            }
+
+            // ＦＣ東京のゴール数 
+            if (up == 5) {
+                $("#f_total").html(goal);
+            }
+            //========ランダムでＰＣがＰＫする 
+            const p_kick = Math.ceil(Math.random() * 2);
+            if (p_kick == 1 && up == 1) {
+                setTimeout(function () {
+                    $("#p1").html("〇");
+                }, 1000);
+
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 1) {
+                setTimeout(function () {
+                    $("#p1").html("✖");
+                }, 1000);
+            }
+            if (p_kick == 1 &&
+                up == 2) {
+                setTimeout(function () {
+                    $("#p2").html("〇");
+                }, 1000);
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 2) {
+                setTimeout(function () {
+                    $("#p2").html("✖");
+                }, 1000);
+            }
+            if (p_kick == 1 && up == 3) {
+                setTimeout(function () {
+                    $("#p3").html("〇");
+                }, 1000);
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 3) {
+                setTimeout(function () {
+                    $("#p3").html("✖");
+                }, 1000);
+            }
+            if (p_kick == 1 && up == 4) {
+                setTimeout(function () {
+                    $("#p4").html("〇");
+                }, 1000);
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 4) {
+                setTimeout(function () {
+                    $("#p4").html("✖");
+                }, 1000);
+            }
+            if (p_kick == 1 && up == 5) {
+                setTimeout(function () {
+                    $("#p5").html("〇");
+                }, 1000);
+                p_goal += 1;
+                $("#p_goal").html(p_goal);
+            } else if (p_kick == 2 && up == 5) {
+                setTimeout(function () {
+                    $("#p5").html("✖");
+                }, 1000);
+            }
+            // 相手のゴール数 
+            if (up == 5) {
+                setTimeout(function () {
+                    $("#p_total").html(p_goal);
+                }, 1500);
+            }
+            // ＝＝＝＝＝5回戦まで終わったら 
+            if (up == 5) {
+
+                if (goal > p_goal) {
+                    localStorage.setItem(number - 1, "win");
+
+
+                    setTimeout(function () {
+                        $(".restorable").html(
+                            '<p class="game">勝利</p>'
+                        );
+                    }, 1000);
+
+                } else if (goal < p_goal) {
+                    setTimeout(function () {
+                        localStorage.setItem(number - 1, "lose");
+                        $(".restorable").html(
+                            '<p class="game">負け</p>'
+                        );
+                    }, 1000);
+                } else {
+                    setTimeout(function () {
+                        localStorage.setItem(number - 1, "draw");
+                        $(".restorable").html(
+                            '<p class="game">サドンデス！</p>'
+                        );
+                    }, 1000);
+                }
+            }
+        });
+
+
+
+        // ↑＝＝＝＝＝＝＝＝＝＝右にキックしたら＝＝＝＝＝＝＝＝＝＝＝ー＝＝＝＝＝＝＝↑
+
+        // ==========================試合数カウント===============================================
+        if (!localStorage.getItem('試合数')) {
+            number = 1; //localStorageデータがない場合
+        } else {
+            number = Number(localStorage.getItem('試合数'));
+        }
+
+        $("#number").html(number);
+        number++; //次の試合
+        localStorage.setItem('試合数', number);
+
+
+        // ＝＝＝＝＝＝＝＝＝＝今このへん↑＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+
+        // for (let i = 1; i < number; i++) {
+
+        //     localStorage.setItem(number, i);
+        //     const key = localStorage.getItem(i);
+
+        // ＝＝＝＝＝＝＝＝＝このへんいじる↓＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        //勝敗をそれぞれ入れたい
+        // 勝ったらwinを入れる
+
+
+
+
+        // ＝＝＝＝＝＝＝今はここまでいじる↑＝＝＝＝＝＝＝＝＝
+
+
+        // ここはあってる↓↓
+        // if (key == null) {
+        //     const h = '<tr><td>試合数</td><td>勝敗</td></tr>';
+        //     $("#list").append(h);
+        // } else {
+        //     const h = '<tr><td>' + key + '</td><td>' + val + '</td></tr>';
+        //     $("#list").append(h);
+        // }
+        // }
+    </script>
+</body>
+
+</html>
