@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>top/幹事さん-イベントページ</title>
+    <link rel="stylesheet" href="./css/top.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>幹事さま</h1>
+    </header>
+    <main>
+        <div class="sec1_2">
+            <!-- ＝＝＝＝＝＝＝＝＝＝＝＝イベント概要＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+            <section class="sec1_create">
+                <div id="create">
+                    <h2>【 イベント概要 】</h2>
+                    <div id="create_event_name"></div>
+
+                    <div class="create_name">
+                        <div>主催者：</div>
+                        <div id="create_name"></div>
+                    </div>
+
+                    <div class="detail">◆イベントの詳細</div>
+                    <div id="create_text"></div>
+                </div>
+
+                <!-- ＝＝＝＝＝＝＝コメント・チャット機能＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+                <section class="sec2_bbs">
+                    <div>
+                        <h2>【 メッセージ 】</h2>
+                        <div class="flex">
+                            <div class="bbs_name">名前：<input type="text" id="uname"></div>
+                            <div>
+                                <textarea id="bbs" rows="3" placeholder="メッセージを入力"></textarea>
+                                <div class="upload">
+                                    <input id="fileInput" type="file" accept="image/*" value="" name="photo">
+                                </div>
+
+                            </div>
+                            <button id="comment">送信</button>
+                        </div>
+                        <br>
+                        <input type="color" id="color">
+                        <input id="range" type="range" value="5" min="1" max="20">
+                        <button id="clear_btn">削除</button>
+                        <a id="download" href="#" download="canvas.jpg"> ▶画像加工をダウンロードする</a>
+                        <div id="img_put"><canvas id="canvas" style="border:1px solid blue;"></canvas></div>
+
+                        <!-- リスト表示 -->
+                        <div id="output" style=" width:500px; height:30em; overflow-x:hidden; overflow-y:scroll;">
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+
+
+            <!-- ＝＝＝＝＝＝＝＝＝＝＝＝参加表明＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+            <section class="sec3_answer">
+                <h2>【 出欠を入力する 】</h2>
+                <p>お名前をご記入のうえ、ご都合を選択し回答してください。</p>
+                <div id="answer_page">
+                    <div>名前:
+                        <input type="text" id="answer_name"></div>
+
+                    <p>日程</p>
+                    <div id="candidate">
+                        <div class="flex margin">
+                            <div class="day1"></div>
+                            <div>
+                                <button id="day1_maru" class="candidate_btn1" value="1">〇</button>
+                                <button id="day1_sankaku" class="candidate_btn1" value="2">△</button>
+                                <button id="day1_batu" class="candidate_btn1" value="3">✖</button>
+                            </div>
+                        </div>
+                        <div class="day2_hidde">
+                            <div class="flex margin">
+                                <div class="day2"></div>
+                                <div>
+                                    <button id="day2_maru" class="candidate_btn2" value="1">〇</button>
+                                    <button id="day2_sankaku" class="candidate_btn2" value="2">△</button>
+                                    <button id="day2_batu" class="candidate_btn2" value="3">✖</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day3_hidde">
+                            <div class="flex margin">
+                                <div class="day3"></div>
+                                <div>
+                                    <button id="day3_maru" class="candidate_btn3" value="1">〇</button>
+                                    <button id="day3_sankaku" class="candidate_btn3" value="2">△</button>
+                                    <button id="day3_batu" class="candidate_btn3" value="3">✖</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="answer">回答する</button>
+                    <div id="no_name"></div>
+                    <div id="no_day1"></div>
+                </div>
+
+                <!-- 回答された名前と参加表明を表にする -->
+                <table id="add">
+                    <tr>
+                        <th>参加者</th>
+                        <th class="day1"></th>
+                        <div class="day2_hidde">
+                            <th class="day2"></th>
+                        </div>
+                        <div class="day2_hidde">
+                            <th class="day3"></th>
+                        </div>
+                    </tr>
+                </table>
+            </section>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+
+
+
+
+
+    <!-- ---------------以下JavaScript領域 -------------------------------------------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase.js"></script>
+    <script>
+        // // ========Your web app's Firebase configuration====================
+        var firebaseConfig = {
+            apiKey: "AIzaSyDf4oZYiwigP1f08-ZH8TnWn5jSdJSon48",
+            authDomain: "kanjisan-94617.firebaseapp.com",
+            databaseURL: "https://kanjisan-94617.firebaseio.com",
+            projectId: "kanjisan-94617",
+            storageBucket: "kanjisan-94617.appspot.com",
+            messagingSenderId: "965629351918",
+            appId: "1:965629351918:web:f3bdf546fa9dd1eea1a0ff"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // ========ここまでがYour web app's Firebase configuratio====================
+
+        const ref = firebase.database().ref();
+        let storageRef = firebase.storage().ref(); //ストレージとのリアルタイム通信
+
+
+        //画像インプット(storageに保存)＆プレヴュー
+        let file;
+        let image;
+        $("#fileInput").change(function (e) {
+            file = e.target.files[0];
+            var imagesRef = storageRef.child('images/' + file);
+            imagesRef.put(file).then(function () {
+
+            });
+
+            // ファイルのブラウザ上でのURLを取得する
+            var blobUrl = window.URL.createObjectURL(file);
+
+            image = 'images/' + file.name;
+            // const text = '<p>▼画像プレビュー▼</p><br>';
+            // // const img_add = '<img id="preview" src="" alt="" >';
+            // const color = '<input type="color" id="color">';
+            // const range = '<input id="range" type="range" value="5" min="1" max="20"><br>';
+            // // const canvas2 = '<canvas id="canvas" style="border:1px solid blue;"></canvas>';
+            const result = '<div id="result"><img id="preview" src="" alt=""></div>';
+
+            $("#img_put").prepend(result);
+
+            // img要素に表示
+            // $('#preview').attr('src', blobUrl);
+        });
+
+
+        //================チャット部分の送信イベント================================
+        $("#comment").on("click", function () {
+
+            //時刻処理
+            let week = ["日", "月", "火", "水", "木", "金", "土"];
+            let now = new Date();
+            let month = now.getMonth() + 1;
+            let date = now.getDate();
+            let h = now.getHours(); //時
+            let m = now.getMinutes();
+            let mmi = ('0' + m).slice(-2);
+            let day = now.getDay(); //曜日
+            let str = month + "/" + date + "(" + week[day] + ") " + h + ":" + mmi;
+
+            //アイコン処理
+            const imgs = ["buke.png", "tuku.jpg", "caram.png"];
+            const img_no = Math.floor(Math.random() * imgs.length);
+
+            const uname = $("#uname").val();
+            const bbs = $("#bbs").val();
+
+            if (image == null) {
+                const msg = {
+                    uname: uname,
+                    bbs: bbs,
+                    str: str,
+                    icon: imgs[img_no],
+                    image: null
+
+                };
+                ref.push(msg); //オブジェクト変数をリアルタイムで送る
+            } else {
+                const msg = {
+                    uname: uname,
+                    bbs: bbs,
+                    str: str,
+                    icon: imgs[img_no],
+                    image: image
+                };
+                ref.push(msg); //オブジェクト変数をリアルタイムで送る
+            }
+
+            // ref.push(msg); //送信する
+
+            $("#bbs").val("");
+            $("#uname").val("");
+            $("#img_put").html("");
+            image = null;
+
+
+
+        });
+        //================チャット部分の送信イベント==============================↑↑
+
+
+
+        // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝出欠回答部分＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        // 参加表明のボタンの色を変更
+
+        const mark = ["〇", "△", "✖"];
+        let plans1 = 0;
+        $(function () {
+            $(".candidate_btn1").on("click", function () {
+                $(".candidate_btn1").not($(this)).removeClass('on1');
+                $(this).toggleClass('on1');
+
+                plans1 = $(this).attr("value");
+
+                if (plans1 == 1) {
+                    plans1 = "〇";
+                } else if (plans1 == 2) {
+                    plans1 = "△";
+                } else if (plans1 == 3) {
+                    plans1 = "✖"
+                }
+            });
+        });
+
+        let plans2 = 0;
+        $(function () {
+            $(".candidate_btn2").on("click", function () {
+                $(".candidate_btn2").not($(this)).removeClass('on2');
+                $(this).toggleClass('on2');
+
+                plans2 = $(this).attr("value");
+
+                if (plans2 == 1) {
+                    plans2 = "〇";
+                } else if (plans2 == 2) {
+                    plans2 = "△";
+                } else if (plans2 == 3) {
+                    plans2 = "✖"
+                }
+            });
+        });
+
+        let plans3 = 0;
+        $(function () {
+            $(".candidate_btn3").on("click", function () {
+                $(".candidate_btn3").not($(this)).removeClass('on3');
+                $(this).toggleClass('on3');
+
+                plans3 = $(this).attr("value");
+
+                if (plans3 == 1) {
+                    plans3 = "〇";
+                } else if (plans3 == 2) {
+                    plans3 = "△";
+                } else if (plans3 == 3) {
+                    plans3 = "✖"
+                }
+            });
+        });
+
+        // ================回答記入========
+
+        // 名前とどこにチェックしたか(参加表明)を送信
+        $("#answer").on("click", function () {
+            const answer_name = $("#answer_name").val();
+
+
+            // 名前未記入の場合
+            if (answer_name == "") {
+                $("#no_name").text("お名前を記入してください").css('color', 'red');
+            }
+            if (!plans1 == "") {
+                $("#no_day1").text("").css('color', 'red');
+            }
+
+            // 日程が一つしかない場合
+            if (plans2 == 0) {
+                plans2 = "";
+            }
+            if (plans3 == 0) {
+                plans3 = "";
+            }
+
+
+            const answer_msg = {
+                //オブジェクトの名前：変数名
+                answer_name: answer_name,
+                day1: plans1,
+                day2: plans2,
+                day3: plans3
+            };
+
+            if (!answer_name == "" && !plans1 == "") {
+
+                ref.push(answer_msg); //送信する
+                $("#answer_name").val("");
+                $(".candidate_btn1").removeClass('on1');
+                $(".candidate_btn2").removeClass('on2');
+                $(".candidate_btn3").removeClass('on3');
+            }
+            // window.location.href = '#create';
+        });
+        // // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝出欠回答部分＝＝＝＝＝＝＝＝＝＝＝＝＝＝↑↑↑
+
+
+
+        //============受信イベント=======================================
+        ref.on("child_added", function (data) {
+            //dataという引数を用意いてfirebaseに保存してあるオブジェクトデータを受け取る
+            const v = data.val();
+            const k = data.key;
+
+
+            // =======★チャットの部分をデータベースから引っ張って表示
+
+            if (!v.image == "") {
+                storageRef.child(v.image).getDownloadURL().then(function (image_url) {
+                    const img_chat = '<img class="image_file" src="' + image_url + '">';
+
+                    const bbs = '<div class="bbs_msg"><div class="img"><img src="./imgs/' +
+                        v.icon + '" width="55"></div><div class="com_time"><div class="uname">' +
+                        v.uname + '</div><div class="chatting"><div class="says"><p>' +
+                        v.bbs + '<br>' + img_chat + '</p></div></div><div class="time">' +
+                        v.str + '</div></div></div>';
+
+                    if (!v.icon == "" && !v.uname == "" && !v.bbs == "" && !v.str == "") {
+                        $("#output").prepend(bbs);
+                    }
+                });
+            } else {
+                const bbs = '<div class="bbs_msg"><div class="img"><img src="./imgs/' +
+                    v.icon + '" width="55"></div><div class="com_time"><div class="uname">' +
+                    v.uname + '</div><div class="chatting"><div class="says"><p>' +
+                    v.bbs + '</p></div></div><div class="time">' +
+                    v.str + '</div></div></div>';
+
+                if (!v.icon == "" && !v.uname == "" && !v.bbs == "" && !v.str == "") {
+                    $("#output").prepend(bbs);
+                }
+            }
+
+
+            // ========イベント情報（イベント名と主催者、内容）を表示する
+            $("#create_event_name").html(v.event_name);
+            $("#create_name").html(v.name);
+            $(
+                "#create_text").html(v.text)
+
+
+
+            //=========参加表明ボタンの表示
+            if (!v.input1 == "") {
+                $(".day1").html(v.input1);
+            }
+            if (!v.input2 == "") {
+                $(".day2").html(v.input2)
+                $(".day2_hidde").css('display', 'block');
+            }
+            if (!v.input3 == "") {
+                $(".day3").html(v.input3);
+                $(".day3_hidde").css('display', 'block');
+            }
+
+            //回答されたものを表として追加する//id="add"
+            const list = '<tr><th>' + v.answer_name +
+                '</th><td>' + v.day1 +
+                '</td><td>' + v.day2 + '</td><td>' + v.day3 + '</td></tr>'
+
+            if (!v.answer_name == "" && !v.day1 == "") {
+                $("#add").append(list);
+            }
+        });
+
+
+        // ＝＝＝＝＝＝＝＝＝＝画像加工＝＝＝＝＝＝＝＝＝＝
+
+        let canvas_mouse_event = false; //スイッチ [ true=線を引く, false=線は引かない ] ＊＊＊
+        let oldX = 0; //１つ前の座標を代入するための変数
+        let oldY = 0; //１つ前の座標を代入するための変数
+        let bold_line = 3; //ラインの太さをここで指定
+        let color = '#000000';
+
+        var fileInput = document.getElementById('fileInput');
+        var canvas = document.getElementById('canvas');
+        var canvasWidth = 400;
+        var canvasHeight = 300;
+        var uploadImgSrc;
+
+        // Canvasの準備
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+        var ctx = canvas.getContext('2d');
+
+        function loadLocalImage(e) {
+            // ファイル情報を取得
+            var fileData = e.target.files[0];
+
+            // 画像ファイル以外は処理を止める
+            if (!fileData.type.match('image.*')) {
+                alert('画像を選択してください');
+                return;
+            }
+
+            // FileReaderオブジェクトを使ってファイル読み込み
+            var reader = new FileReader();
+            // ファイル読み込みに成功したときの処理
+            reader.onload = function () {
+                // Canvas上に表示する
+                uploadImgSrc = reader.result;
+                canvasDraw();
+            }
+            // ファイル読み込みを実行
+            reader.readAsDataURL(fileData);
+        }
+
+        // ファイルが指定された時にloadLocalImage()を実行
+        fileInput.addEventListener('change', loadLocalImage, false);
+
+        // Canvas上に画像を表示する
+        function canvasDraw(imgSrc) {
+            // canvas内の要素をクリアする
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            // Canvas上に画像を表示
+            var img = new Image();
+            img.src = uploadImgSrc;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+
+            }
+        }
+
+        $(canvas).on("mousedown", function (e) {
+            oldY = e.offsetY;
+            oldX = e.offsetX;
+
+            canvas_mouse_event = true;
+        });
+
+        $(canvas).on("mousemove", function (e) {
+
+            //マウスムーブを制御するために
+            if (canvas_mouse_event == true) {
+                const px = e.offsetX;
+                const py = e.offsetY;
+
+                ctx.strokeStyle = color;
+                ctx.lineWidth = bold_line;
+
+                ctx.lineJoin = "round";
+                ctx.lineCap = "round";
+                ctx.beginPath();
+                ctx.moveTo(oldX, oldY);
+                ctx.lineTo(px, py);
+                ctx.stroke();
+                oldX = px;
+                oldY = py;
+            }
+        });
+
+        $(canvas).on("mouseup", function () {
+            canvas_mouse_event = false;
+        });
+
+        $(canvas).on("mouseout", function () {
+            canvas_mouse_event = false;
+        });
+
+        //色の変更
+        $("#color").on("change", function () {
+            color = $(this).val(); //色値の取得
+            // 今イベントが起こったところをthis（#color）
+            // ctx.strokeStyle = color;
+
+        });
+
+        // 太さの変更
+        $("#range").on("change", function () {
+            bold_line = $(this).val(); //スライダーの値を取得
+            //今changeしたところの値を取る
+            // ctx.lineWidth = bold_line;
+        });
+
+        // クリアボタン
+        $("#clear_btn").on("click", function () {
+            ctx.beginPath();
+            ctx.clearRect(0, 0, canvas.width, canvas.height); //大きさを自動的に取る
+
+
+        });
+
+        // 画像加工をダウンロード
+        $("#download").click(function () {
+            canvas = document.getElementById('canvas');
+            var base64 = canvas.toDataURL("image/jpeg");
+            document.getElementById("download").href = base64;
+        });
+    </script>
+    <!-- // https://qiita.com/seiya1121/items/4cbc32678558315c2159 -->
+
+    <!-- https://blog.katsubemakito.net/html5/camera1 -->
+
+    <!-- canvas 参考記事  
+    https://www.otwo.jp/blog/canvas-drawing/#step2-4
+https://www.tam-tam.co.jp/tipsnote/javascript/post13538.html -->
+</body>
+
+</html>
