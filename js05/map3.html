@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>お店候補１選択</title>
+
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        ​ body {
+            padding: 0;
+            margin: 0;
+        }
+
+        ​ h1 {
+            padding: 0;
+            margin: 0;
+            font-size: 50%;
+        }
+
+        ​ #geocode {
+            font-size: 120%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>会場候補を探す</h1>
+    <p>行きたいエリアをダブルクリックするとお店の候補が出てきます。</p>
+    <!-- MAP[START] -->
+    <div id="myMap" style='width:1000px;height:500px;'></div>
+
+    ​
+    <!-- ダブルクリックした近くのお店候補を表にする -->
+    <table id="table">
+        <tr>
+            <th id="number"></th>
+            <th style="width: 200px;">店舗名</th>
+            <th>住所</th>
+            <th>最寄り駅</th>
+            <th style="width: 300px;">営業時間(定休日)</th>
+            <th></th>
+        </tr>
+    </table>
+
+
+    <!-- ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ここからjavascript＝＝＝＝＝＝＝＝＝＝＝＝ -->
+
+    <script
+        src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AlifJJNQU2HLjuz8pM4tLSBcX6htivoXsVYYMYxnUvQc1555Qk5MyGxfaCkEY14P'
+        async defer></script>
+
+    <script src="./js copy/BmapQuery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase.js"></script>
+    <script>
+        // // ========Your web app's Firebase configuration====================
+        var firebaseConfig = {
+            apiKey: "AIzaSyDf4oZYiwigP1f08-ZH8TnWn5jSdJSon48",
+            authDomain: "kanjisan-94617.firebaseapp.com",
+            databaseURL: "https://kanjisan-94617.firebaseio.com",
+            projectId: "kanjisan-94617",
+            storageBucket: "kanjisan-94617.appspot.com",
+            messagingSenderId: "965629351918",
+            appId: "1:965629351918:web:f3bdf546fa9dd1eea1a0ff"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // firebaseに保存する
+        const ref = firebase.database().ref();
+        // ========ここまでがFirebase で必要なもの===================
+
+
+
+        // ＝＝＝＝＝＝地図表示のために必要なもの＝＝＝＝＝＝＝＝＝＝＝＝
+        let map;
+
+        function GetMap() {
+
+            map = new Bmap("#myMap");
+            // 札幌テレビ塔近くを中心にして地図を表示
+            map.startMap(43.0611335, 141.3563703, "load", 15);
+
+            let lat;
+            let lon;
+
+            // ダブルクリックしたところの緯度経度を取って、その周辺のお店を地図上に表示させる
+            map.onGeocode("dblclick", function (data2) {
+                lat = data2.location.latitude;
+                lon = data2.location.longitude;
+
+                // ＝＝＝＝＝＝ぐるなびAPI＝＝＝＝＝＝
+
+                const data = {
+
+                    keyid: "29b54ca9f30fe0770ddf80d58cc5f3c2",
+                    latitude: lat,
+                    longitude: lon,
+                    range: 5,
+                    hit_per_page: 20
+                };
+
+                //Ajax（非同期通信）
+
+                axios.get('https://api.gnavi.co.jp/RestSearchAPI/v3/', {
+                    params: data
+                }).then(function (response) {
+
+                    //データ受信成功！！showData関数にデータを渡す
+
+                    showData(response.data);
+                    console.log("データ受信ＯＫ");
+
+                }).catch(function (error) {
+                    console.log(error); //通信Error
+                }).then(function () {
+                    //console.log("Last");//通信OK/Error後に処理を必ずさせたい場合
+                });
+
+                function showData(data) {
+
+                    const len = data.rest.length;
+
+                    const options = [];
+
+
+                    for (let i = 0; i < len; i++) {
+
+                        const shop_lat = data.rest[i].latitude;
+                        const shop_lon = data.rest[i].longitude;
+
+                        $("#table").append('<tr><td>' + [i + 1] +
+                            '</td><td id="name' + [i + 1] + '"><a href="' +
+                            data.rest[i].url +
+                            '" target="_blank" rel="noopener noreferrer" id="url" style="color: blue;">' +
+                            data
+                            .rest[i].name + '</a><div id="shop_lat' + [i + 1] + '" style="display:none;">' +
+                            shop_lat + '</div><div id="shop_lon' + [i + 1] + '" style="display:none;">' +
+                            shop_lon + '</div></td><td id="address' + [i + 1] + '">' +
+                            data.rest[i].address +
+                            '</td><td id="station' + [i + 1] + '">' +
+                            data.rest[i].access.station + '<br>  ' +
+                            data.rest[i].access.walk +
+                            '分</td><td id="opentime">' +
+                            data.rest[i].opentime + '<br><p>定休日：' +
+                            data.rest[i].holiday +
+                            '</p></td><td><button id="btn' + [i + 1] + '">会場候補にする</button></td></tr>');
+
+
+
+                        options[i] = {
+
+                            "lat": data.rest[i].latitude,
+                            "lon": data.rest[i].longitude,
+                            "title": "【" + [i + 1] + "】" + data.rest[i].name,
+                            "pinColor": "#ff0000",
+                            "height": 300,
+                            "width": 320,
+                            "description": data.rest[i].pr.pr_short,
+                            "show": false
+                        }
+                    };
+                    map.infoboxLayers(options, true);
+                };
+            });
+        }
+
+
+        //「会場候補にする」ボタンを押したらお店情報をfirebaseに保存する
+
+        $(document).on("click", "#btn1", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+
+                const name = $("#name1").text();
+                const address = $("#address1").text();
+                const station = $("#station1").text();
+                const url = $("#name1").html();
+                const shop_lat = $("#shop_lat1").text();
+                const shop_lon = $("#shop_lon1").text();
+
+                const msg = {
+
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn2", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+
+                const name = $("#name2").text();
+                const address = $("#address2").text();
+                const station = $("#station2").text();
+                const url = $("#name2").html();
+                const shop_lat = $("#shop_lat2").text();
+                const shop_lon = $("#shop_lon2").text();
+
+                const msg = {
+
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn3", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name3").text();
+                const address = $("#address3").text();
+                const
+                    station = $("#station3").text();
+                const url = $("#name3").html();
+                const shop_lat = $("#shop_lat3").text();
+                const shop_lon = $("#shop_lon1").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn4", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name4").text();
+                const address = $("#address4").text();
+                const
+                    station = $("#station4").text();
+                const url = $("#name4").html();
+                const shop_lat = $("#shop_lat4").text();
+                const shop_lon = $("#shop_lon4").text();
+
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn5", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name5").text();
+                const address = $("#address5").text();
+                const
+                    station = $("#station5").text();
+                const url = $("#name5").html();
+                const shop_lat = $("#shop_lat5").text();
+                const shop_lon = $("#shop_lon5").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn6", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name6").text();
+                const address = $("#address6").text();
+                const
+                    station = $("#station6").text();
+                const url = $("#name6").html();
+                const shop_lat = $("#shop_lat6").text();
+                const shop_lon = $("#shop_lon6").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn7", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name7").text();
+                const address = $("#address7").text();
+                const
+                    station = $("#station7").text();
+                const url = $("#name7").html();
+                const shop_lat = $("#shop_lat7").text();
+                const shop_lon = $("#shop_lon7").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn8", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name8").text();
+                const address = $("#address8").text();
+                const
+                    station = $("#station8").text();
+                const url = $("#name8").html();
+                const shop_lat = $("#shop_lat8").text();
+                const shop_lon = $("#shop_lon8").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn9", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name9").text();
+                const address = $("#address9").text();
+                const
+                    station = $("#station9").text();
+                const url = $("#name9").html();
+                const shop_lat = $("#shop_lat9").text();
+                const shop_lon = $("#shop_lon9").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn10", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name10").text();
+                const address = $("#address10").text();
+                const
+                    station = $("#station10").text();
+                const url = $("#name10").html();
+                const shop_lat = $("#shop_lat10").text();
+                const shop_lon = $("#shop_lon10").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn11", function () {
+            let click = 0;
+            click++;
+
+            for (let i = 0; i < click; i++) {
+                const name = $("#name11").text();
+                const address = $("#address11").text();
+                const
+                    station = $("#station11").text();
+                const url = $("#name11").html();
+                const shop_lat = $("#shop_lat11").text();
+                const shop_lon = $("#shop_lon11").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn12", function () {
+            let click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name12").text();
+                const address = $("#address12").text();
+                const
+                    station = $("#station12").text();
+                const url = $("#name12").html();
+                const shop_lat = $("#shop_lat12").text();
+                const shop_lon = $("#shop_lon12").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn13", function () {
+            let click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name13").text();
+                const address = $("#address13").text();
+                const
+                    station = $("#station13").text();
+                const url = $("#name13").html();
+                const shop_lat = $("#shop_lat13").text();
+                const shop_lon = $("#shop_lon13").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn14", function () {
+            let click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name14").text();
+                const address = $("#address14").text();
+                const
+                    station = $("#station14").text();
+                const url = $("#name14").html();
+                const shop_lat = $("#shop_lat14").text();
+                const shop_lon = $("#shop_lon14").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn15", function () {
+            let click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name15").text();
+                const address = $("#address15").text();
+                const
+                    station = $("#station15").text();
+                const url = $("#name15").html();
+                const shop_lat = $("#shop_lat15").text();
+                const shop_lon = $("#shop_lon15").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn16", function () {
+            let click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name16").text();
+                const address = $("#address16").text();
+                const
+                    station = $("#station16").text();
+                const url = $("#name16").html();
+                const shop_lat = $("#shop_lat16").text();
+                const shop_lon = $("#shop_lon16").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn17", function () {
+            let click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name17").text();
+                const address = $("#address17").text();
+                const
+                    station = $("#station17").text();
+                const url = $("#name17").html();
+                const shop_lat = $("#shop_lat17").text();
+                const shop_lon = $("#shop_lon17").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn18", function () {
+            let click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name18").text();
+                const address = $("#address18").text();
+                const
+                    station = $("#station18").text();
+                const url = $("#name18").html();
+                const shop_lat = $("#shop_lat18").text();
+                const shop_lon = $("#shop_lon18").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn19", function () {
+            let click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name19").text();
+                const address = $("#address19").text();
+                const
+                    station = $("#station19").text();
+                const url = $("#name19").html();
+                const shop_lat = $("#shop_lat19").text();
+                const shop_lon = $("#shop_lon19").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+
+        $(document).on("click", "#btn20", function () {
+            let
+                click = 0;
+            click++;
+            for (let i = 0; i < click; i++) {
+                const name = $("#name20").text();
+                const address = $("#address20").text();
+                const
+                    station = $("#station20").text();
+                const url = $("#name20").html();
+                const shop_lat = $("#shop_lat20").text();
+                const shop_lon = $("#shop_lon20").text();
+                const msg = {
+                    shop_name3: name,
+                    address3: address,
+                    station3: station,
+                    url3: url,
+                    shop_lat3: shop_lat,
+                    shop_lon3: shop_lon
+                };
+                ref.push(msg);
+                window.location.href = './secretary.html';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

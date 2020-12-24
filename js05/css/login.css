@@ -1,0 +1,77 @@
+/* リセットおまじない--------------------------------- */
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-size: 16px;
+    line-height: 1.4;
+    min-width: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    outline: none;
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    border: 0px;
+    vertical-align: bottom;
+}
+
+/* --------------------------------------------------- */
+
+body {
+    font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", "Meiryo", "HGPｺﾞｼｯｸM", "Osaka", "ＭＳ Ｐゴシック", sans-serif, Century Gothic, Arial;
+    background-color: #fffde5c4;
+}
+
+header {
+    width: 100%;
+    height: 60px;
+    background: #FFA100;
+}
+
+h1 {
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+footer {
+    background-color: gray;
+    width: 100%;
+    height: 50px;
+}
+
+/* ↑↑==============ここまで共通＝＝＝＝＝＝＝＝＝＝↑↑ */
+
+h2 {
+    text-align: center;
+    margin: 45px;
+}
+
+#firebaseui-auth-container {
+    margin-bottom: 160px;
+}
