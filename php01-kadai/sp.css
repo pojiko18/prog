@@ -1,0 +1,134 @@
+@media screen and (min-width: 767px) {
+
+
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dt,
+    dd {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    body {
+        width: 100%;
+        margin: 10px 5px;
+        background-color: blanchedalmond;
+    }
+
+    header {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 40px;
+    }
+
+    .submitinput {
+        background-color: orange;
+        margin: 30px70px;
+        width: 200px;
+        height: 40px;
+    }
+
+    div {
+        margin-top: 20px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dt,
+    dd {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    main {
+
+        padding: 10px 25px 60px 25px;
+        background-color: blanchedalmond;
+    }
+
+    header {
+        font-size: 20px;
+        font-weight: bold;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(253, 199, 117);
+        height: 50px;
+
+    }
+
+    .sec {
+        margin: 40px 20px;
+    }
+
+    .more {
+        font-size: small;
+        color: red;
+    }
+
+    .submit {
+        margin: 30px auto;
+        width: 200px;
+        height: 40px;
+    }
+
+    .submit input {
+        background-color: orange;
+        width: 200px;
+        height: 40px;
+    }
+
+    div {
+        margin-top: 40px;
+    }
+
+    .right {
+        text-align: left;
+        margin: 10px 0 0 15px;
+    }
+
+    textarea {
+        margin-top: 10px;
+    }
+
+    p {
+        margin-top: 10px;
+    }
+
+    footer {
+        background-color: gray;
+        color: whitesmoke;
+        height: 50px;
+        text-align: center;
+
+    }
+
+    h1 {
+        padding: 50px 30px;
+    }
+
+
+}
