@@ -1,3 +1,11 @@
+<?php
+session_start();
+$err =$_SESSION;
+
+$_SESSION = array();
+session_destroy();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,13 +28,6 @@ include("l_header.php");
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<?php
-if (isset($_SESSION['EMAIL'])) {
-  echo 'ようこそ'.h($_SESSION['EMAIL'])."さん<br>";
-  echo "<a href='/logout.php'>ログアウトはこちら。</a>";
-  exit;
-}
-?>
 <div class="loginTitle">
   <form method="post" action="login_act.php"  class="form">
   <h2>ログイン</h2>
@@ -34,13 +35,17 @@ if (isset($_SESSION['EMAIL'])) {
       <dl class="form-inner">
         <dt class="form-title">ID / メードアドレス</dt>
         <dd class="form-item"><input type="text" name="lid" class="lid"></dd>
-        <div id="no_lid"></div>
+        <?php if(isset($err['lid'])): ?>
+        <p><?php echo $err['lid']; ?></p>
+        <?php endif; ?>
         <dt class="form-title">パスワード（6文字以上 半角英数字）</dt>
         <dd class="form-item"><input   type="password" name="lpw" class="lpw" minlength="6" pattern="[a-zA-Z0-9]+"></dd>
-        <div id="no_lpw"></div>
+        <?php if(isset($err['lpw'])): ?>
+        <p><?php echo $err['lpw']; ?></p>
+        <?php endif; ?>
       </dl>
       <p class="btn-c">
-        <input type="submit" value="ログインする" id="btn">
+        <input type="submit" name="login" value="ログインする" id="btn">
       </p>
     </div>
   </form>
@@ -50,34 +55,7 @@ if (isset($_SESSION['EMAIL'])) {
 <footer>created by pojico18 of G'sACADEMIY UNIT_SAPPORO_DEV1</footer>
 
 
-    <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="js/jquery-2.1.3.min.js"></script>
-    <!-- JQuery -->
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-<script>
-
-
-$("#btn").on("click", function () {
-
-  const nolid = $(".lid").val();
-  const nolpw = $(".lpw").val();
-
-
-  // 名前未記入の場合
-  if (nolid == "") {
-    $("#no_lid").text("記入してください").css('color', 'red');
-  }
-  if (nolpw == "") {
-    $("#no_lpw").text("記入してください").css('color', 'red');
-  }
-});
-
+    
 </script>
 
 </body>

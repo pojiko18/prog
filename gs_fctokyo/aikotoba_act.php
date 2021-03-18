@@ -1,8 +1,16 @@
 <?php
 session_start();
-$aikotoba = $_POST["aikotoba"];
-$e_id = $_POST["e_id"];
-$u_id = $_POST["u_id"];
+
+$err =[];
+if(!$aikotoba = filter_input(INPUT_POST,'aikotoba')){
+  $err['aikotoba'] = '合言葉を入れてください';
+}
+if(!$e_id = filter_input(INPUT_POST,'e_id')){
+  $err['e_id'] = 'イベントIDが取れていません';
+}
+if(!$u_id = filter_input(INPUT_POST,'u_id')){
+  $err['u_id'] = 'ユーザーIDが取れていません';
+}
 
 // 1. 接続します
 include("funcs.php");
@@ -23,9 +31,10 @@ if($res==false){
 }
 
 //３. 合言葉の認証
+
 if($aikotoba == ""){
-    echo "合言葉を入力してください";
-    
+    echo "合言葉を入力してください。（5秒後に）";
+    header("refresh:5;url=Location: done.php");
 }else if($aikotoba == $row["password"]){
 
 

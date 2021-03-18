@@ -24,8 +24,8 @@ $pdo = dbcon();
 
 
 //３．データ登録SQL作成
-$sql = "INSERT INTO users(user_id, user_name, email, pass,birthday,address, life_flg, indate )
-VALUES(NULL, :user_name, :email, :pass,NULL,NULL, 0, sysdate())";
+$sql = "INSERT INTO users(user_id, user_name, email, pass,year,month,day,address, img,text,life_flg, indate )
+VALUES(NULL, :user_name, :email, :pass,NULL,NULL,NULL,NULL,NULL,NULL ,0, sysdate())";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':user_name', $name, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $stmt->bindValue(':email', $lid, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)

@@ -1,7 +1,15 @@
 <?php
 session_start();
-$lid = $_POST["lid"];
-$lpw = $_POST["lpw"];
+
+$err =[];
+
+if(!$lid = filter_input(INPUT_POST,'lid')){
+  $err['lid'] = 'IDを入れてください';
+}
+if(!$lpw = filter_input(INPUT_POST,'lpw')){
+  $err['lpw'] = 'パスワードを入れてください';
+}
+
 
 //1. 接続します
 include("funcs.php");
@@ -26,16 +34,28 @@ if($res==false){
 $val = $stmt->fetch(); //1レコードだけ取得する方法
 
 //４. 該当レコードがあればSESSIONに値を代入
-if( $val["user_id"] != "" ){
+// if( $val["user_id"] != "" ){
+//   $_SESSION["chk_ssid"]  = session_id();
+//   $_SESSION["id"]   = $val['user_id'];
+//   // $_SESSION["name"]       = $val['name'];
+//   //Login処理OKの場合select.phpへ遷移
+//   header("Location: y_event_list.php");
+// }else{
+//   //Login処理NGの場合login.phpへ遷移
+//   header("Location: login.php");
+// }
+// //処理終了
+// exit();
+if(count($err) > 0){
+  $_SESSION = $err;
+  header("Location: login.php");
+}else{
   $_SESSION["chk_ssid"]  = session_id();
   $_SESSION["id"]   = $val['user_id'];
-  // $_SESSION["name"]       = $val['name'];
-  //Login処理OKの場合select.phpへ遷移
   header("Location: y_event_list.php");
-}else{
-  //Login処理NGの場合login.phpへ遷移
-  header("Location: login.php");
 }
 //処理終了
 exit();
+
+
 ?>

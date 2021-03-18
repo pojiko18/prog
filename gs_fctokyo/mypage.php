@@ -4,16 +4,16 @@ include("funcs.php");
 loginCheck();
 
 //GETでid値を取得
-$id =$_SESSION["id"];
+$u_id =$_SESSION["id"];
 
 
 //DB接続
 $pdo = dbcon();
 
-//ユーザー情報の取得
-$sql = "SELECT * FROM users WHERE user_id=:id";
+//◆ユーザー情報の取得
+$sql = "SELECT * FROM users WHERE user_id=:u_id";
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
 $status = $stmt->execute();
 
 //データ表示
@@ -26,6 +26,41 @@ if($status==false) {
   //１データのみ抽出の場合はwhileループで取り出さない
   $row = $stmt->fetch();
 }
+
+
+
+
+//◆参加したイベントとイベント詳細をJOINさせて取得
+$sql_e = "SELECT * FROM event_list LEFT JOIN event ON event_list.event_id = event.e_id WHERE user_id=:u_id ";
+
+$stmt_e = $pdo->prepare($sql_e);
+$stmt_e->bindValue(':u_id', $u_id, PDO::PARAM_INT);
+$status_e = $stmt_e->execute();
+
+//データ表示
+$view="";
+
+if($status_e==false) {
+  //execute（SQL実行時にエラーがある場合）
+  $error_e = $stmt_e->errorInfo();
+  exit("ErrorQuery:".$error_e[2]);
+
+} else {
+  // var_dump($stmt_e);
+    while( $res_eventlist = $stmt_e->fetch(PDO::FETCH_ASSOC)){ 
+      $view_event .= '<div class="box"><a href="y_event_detail.php?id='.$res_eventlist["e_id"].'" target="_blank" rel="noopener noreferrer"><button>';
+      $view_event .= '<h3>'.$res_eventlist["title"].'</h3>';
+      $view_event .= '<p>'.$res_eventlist["year"].'年'.$res_eventlist["month"].'月'.$res_eventlist["day"].'日</p>';
+      $view_event .= '<p>＞詳細</p>';
+      $view_event .= '</button></a></div>';
+
+      
+  }
+}
+
+
+
+
 
 
 ?>
@@ -53,10 +88,21 @@ include("l_header.php");
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<div><?=$row["user_name"]?>さん、こんにちは</div>
 
+<!-- 自己紹介 -->
+<section>
+<div>ここに写真を入れる</div>
 
+<div><?=$row["user_name"]?></div>
+<div><a href="./mypage_edit.php?id=<?=$row["user_id"]?>">編集</a></div>
+<div>自己紹介入れる</div>
+</section>
 
+<!-- イベント履歴 -->
+<section>
+<div><?=$view_event?></div>
+
+</section>
 
 
 <!-- Main[End] -->

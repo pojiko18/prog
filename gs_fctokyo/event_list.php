@@ -15,6 +15,7 @@ if($status==false) {
     //execute（SQL実行時にエラーがある場合）
   $error = $stmt->errorInfo();
   exit("SQLError:".$error[2]);
+  
 
 }else{
   //Selectデータの数だけ自動でループしてくれる
