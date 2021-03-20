@@ -38,7 +38,7 @@ $stmt_e->bindValue(':u_id', $u_id, PDO::PARAM_INT);
 $status_e = $stmt_e->execute();
 
 //データ表示
-$view="";
+$view_event="";
 
 if($status_e==false) {
   //execute（SQL実行時にエラーがある場合）
@@ -57,10 +57,6 @@ if($status_e==false) {
       
   }
 }
-
-
-
-
 
 
 ?>
@@ -91,7 +87,7 @@ include("l_header.php");
 
 <!-- 自己紹介 -->
 <section>
-<div>ここに写真を入れる</div>
+<div><img src="upload/<?=$row["img"]?>" width="100"></div>
 
 <div><?=$row["user_name"]?></div>
 <div><a href="./mypage_edit.php?id=<?=$row["user_id"]?>">編集</a></div>
@@ -109,6 +105,9 @@ include("l_header.php");
 <?php
 include("y_footer.php");
 ?>
+
+
+
 
 </body>
 </html>

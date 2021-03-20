@@ -52,9 +52,13 @@ include("l_header.php");
 
 <!-- Main[Start] -->
 <div>
-    <form method="POST" action="mypage_update.php">
+    <form action="mypage_update.php" method="post" enctype="multipart/form-data">
+        <div id="status">編集フォーム</div>
+
+    
         <!-- 画像を入れる -->
-        <input type="file" name="upfile"><br>
+        <input type="file" accept="image/*" capture="camera" name="upfile">
+        <br>
 
         <input type="text" name="email" class="book_input" value="<?=$row["email"]?>"><br>
         <dl class="form-inner">
@@ -299,14 +303,34 @@ include("l_header.php");
         <div class="submit">
             <input type="submit" value="変更">
         </div>
-
-
-        
-        
     </form>
 </div>
 
 <footer>created by pojico18 of G'sACADEMIY UNIT_SAPPORO_DEV1</footer>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+//登録ボタンをクリック
+$("#btn").on("click",function() {
+    //axiosでAjax送信
+    //Ajax（非同期通信）
+    const params = new URLSearchParams();
+    params.append('email',  $("#email").val());
+    params.append('year', $("#year").val());
+    params.append('text',$("#text").val());
 
+    //axiosでAjax送信
+    axios.post('insert.php',params).then(function (response) {
+        //console.log(typeof response.data);//通信OK
+        if(response.data==true){
+        document.querySelector("#status").innerHTML=response.data;
+        }
+    }).catch(function (error) {
+        console.log(error);//通信Error
+    }).then(function () {
+        console.log("Last");//通信OK/Error後に処理を必ずさせたい場合
+    });
+});
+</script>
 </body>
 </html>

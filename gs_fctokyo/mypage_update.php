@@ -10,8 +10,7 @@ $pref = $_POST["pref"];
 
 $text = $_POST["text"];
 $id =$_POST["id"];
-// 画像
-$upfile = fileUpload("upfile","upload/");
+
 
 //２、 DB接続します
 
@@ -19,6 +18,10 @@ $upfile = fileUpload("upfile","upload/");
 include("./funcs.php");
 $pdo = dbcon();
 
+// 画像
+$upfile = fileUpload("upfile","upload/");
+
+echo $upfile;
 
 
 //３．データ登録SQL作成
