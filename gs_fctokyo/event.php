@@ -8,6 +8,12 @@ loginCheck();
   <?php
 include("l_header.php");
 ?>
+<div>ポイント数目安</div>
+<p>試合スタジアム観戦：100ｐ</p>
+<p>試合オンライン観戦：50ｐ</p>
+<p>有料イベント：50ｐ</p>
+<p>無料イベント10ｐ</p>
+
 
 <form method="post" action="event_create.php"  class="form">
   <h2>イベント作成</h2>
@@ -94,7 +100,8 @@ include("l_header.php");
     <dd class="form-item"><textArea name="contents" rows="5" cols="55"></textArea></label>
     <dt class="form-title">合言葉</dt>
     <dd class="form-item"><input type="text" name="password" class="rediTextForm">
-
+    <dt class="form-title">ポイント数</dt>
+    <dd class="form-item"><input type="text" name="point" class="rediTextForm">
     </dl>
       <p class="btn-c">
         <input type="submit" value="作成する" class="btn">

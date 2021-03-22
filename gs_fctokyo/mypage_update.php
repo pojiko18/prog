@@ -21,7 +21,6 @@ $pdo = dbcon();
 // 画像
 $upfile = fileUpload("upfile","upload/");
 
-echo $upfile;
 
 
 //３．データ登録SQL作成
@@ -30,9 +29,9 @@ $sql = "UPDATE users SET email=:email,year=:year,month=:month,day=:day,address=:
 $stmt = $pdo->prepare($sql);
 
 $stmt->bindValue(':email', $email, PDO::PARAM_STR);  
-$stmt->bindValue(':year', $year, PDO::PARAM_STR);  
-$stmt->bindValue(':month', $month, PDO::PARAM_STR);   //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':day', $day, PDO::PARAM_STR); 
+$stmt->bindValue(':year', $year, PDO::PARAM_INT);  
+$stmt->bindValue(':month', $month, PDO::PARAM_INT);
+$stmt->bindValue(':day', $day, PDO::PARAM_INT);
 $stmt->bindValue(':pref', $pref, PDO::PARAM_STR); 
 $stmt->bindValue(':img', $upfile, PDO::PARAM_STR); 
 $stmt->bindValue(':text', $text, PDO::PARAM_STR); 

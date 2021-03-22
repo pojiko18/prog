@@ -27,6 +27,25 @@ if($status==false) {
   $row = $stmt->fetch();
 }
 
+// //◆poin情報の取得
+// $sql = "SELECT * FROM event_list WHERE user_id=:user_id";
+// $stmt = $pdo->prepare($sql);
+// $stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
+// $status = $stmt->execute();
+
+// //データ表示
+// if($status==false) {
+//   //execute（SQL実行時にエラーがある場合）
+//   $error = $stmt->errorInfo();
+//   exit("ErrorQuery:".$error[2]);
+
+// } else {
+//   //１データのみ抽出の場合はwhileループで取り出さない
+//   $row = $stmt->fetch();
+// }
+
+
+
 
 
 
@@ -39,6 +58,7 @@ $status_e = $stmt_e->execute();
 
 //データ表示
 $view_event="";
+$point_count=0;
 
 if($status_e==false) {
   //execute（SQL実行時にエラーがある場合）
@@ -54,7 +74,7 @@ if($status_e==false) {
       $view_event .= '<p>＞詳細</p>';
       $view_event .= '</button></a></div>';
 
-      
+      $point_count +=  $res_eventlist["point"];
   }
 }
 
@@ -90,6 +110,8 @@ include("l_header.php");
 <div><img src="upload/<?=$row["img"]?>" width="100"></div>
 
 <div><?=$row["user_name"]?></div>
+
+<div>獲得ポイント数：<?=$point_count?></div>
 <div><a href="./mypage_edit.php?id=<?=$row["user_id"]?>">編集</a></div>
 <div>自己紹介入れる</div>
 </section>

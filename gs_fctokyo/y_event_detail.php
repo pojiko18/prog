@@ -60,12 +60,13 @@ if($status==false) {
   <title>イベント詳細ページ</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
   <link rel="stylesheet" href="css/range.css">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="./css/index.css" rel="stylesheet">
+  
+  <link href="./css/main.css" rel="stylesheet">
   <link href="./css/select.css" rel="stylesheet">
   <link href="./css/login.css" rel="stylesheet">
   <link href="./css/style_sp.css" rel="stylesheet">
-
+  <!-- モーダル用 ↓↓↓-->
+<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
   <style type="text/css">
 div {border:solid 1px #000000;}
 </style>
@@ -78,7 +79,16 @@ include("l_header.php");
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-
+    <!-- ポップアップ
+    <div class="popup" id="js-popup">
+      <div class="popup-inner">
+        <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+        <a href="#"><img src="./upload/20210320064558b7d5b9411bdddf35e9f01edc9eb941d5.jpg" alt="ポップアップ画像"></a>
+      </div>
+      <div class="black-background" id="js-black-bg"></div>
+    </div> 
+  参照：https://tech-dig.jp/js-modal/
+  -->
 <!-- 日程入れる -->
 <section>
 
@@ -100,13 +110,15 @@ include("l_header.php");
             <dd class="form-item"><input type="text" name="aikotoba"></dd>
             <input type="hidden" name="e_id" value="<?=$row["e_id"]?>">
             <input type="hidden" name="u_id" value="<?=$u_id?>">
-            
+            <input type="hidden" name="point" value="<?=$row["point"]?>">
         </dl>
         <p class="btn-c">
-            <input type="submit" value="送信する" class="btn">
+            <input type="submit" value="送信する" class="btn" id="js-show-popup">
         </p>
 
     </form>
+
+
 </section>
 
 <!-- 時間あればチャット入れる -->
@@ -122,6 +134,8 @@ include("l_header.php");
 <?php
 include("y_footer.php");
 ?>
+
+
 
 
 

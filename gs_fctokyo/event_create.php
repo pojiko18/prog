@@ -12,6 +12,7 @@ $time = $_POST["time"];
 $place = $_POST["place"];
 $contents = $_POST["contents"];
 $password = $_POST["password"];
+$point = $_POST["point"];
 $id =$_SESSION["id"];
 
 if($title==""){
@@ -27,8 +28,8 @@ if($password==""){
 $pdo = dbcon();
 
 //３．データ登録SQL作成
-$stmt = $pdo->prepare("INSERT INTO event(o_id,   title,year,month,day,time,place,contents,password)
-VALUES(:o_id   ,:title,:year,:month,:day,:time,:place,:contents,:password)");
+$stmt = $pdo->prepare("INSERT INTO event(o_id,   title,year,month,day,time,place,contents,password,point)
+VALUES(:o_id   ,:title,:year,:month,:day,:time,:place,:contents,:password,:point)");
 // $stmt = $pdo->prepare("INSERT INTO gs_wb_table(want_name,want_url,want_com,rating2,indate)VALUES(:want_name,:want_url,:want_com,:rating2,sysdate())");
 
 //バインド変数を作ってセキュリティーを強化させる
@@ -42,7 +43,7 @@ $stmt->bindValue(':time', $time, PDO::PARAM_STR);
 $stmt->bindValue(':place', $place, PDO::PARAM_STR);   
 $stmt->bindValue(':contents', $contents, PDO::PARAM_STR); 
 $stmt->bindValue(':password', $password, PDO::PARAM_STR); 
-
+$stmt->bindValue(':point', $point, PDO::PARAM_INT);
 
 //--実行する
 $status = $stmt->execute(); //結果：false＝エラー

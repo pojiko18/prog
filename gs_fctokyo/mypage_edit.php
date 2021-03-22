@@ -61,6 +61,10 @@ include("l_header.php");
         <br>
 
         <input type="text" name="email" class="book_input" value="<?=$row["email"]?>"><br>
+
+        <!-- <input type="date" id="start" name="birthday"
+        value="1990-01-01"
+        min="1900-01-01" max="2100-12-31"> -->
         <dl class="form-inner">
             <dt class="form-title">誕生日</dt>
             <dd class="form-item">
