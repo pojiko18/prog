@@ -26,12 +26,29 @@ if($res==false){
 }
 
 
+//◆ユーザー情報の取得
+$sql_u = "SELECT * FROM users WHERE user_id=:u_id";
+$stmt_u = $pdo->prepare($sql_u);
+$stmt_u->bindValue(':u_id', $u_id, PDO::PARAM_INT);
+$status_u = $stmt_u->execute();
+
+//データ表示
+if($status_u==false) {
+  //execute（SQL実行時にエラーがある場合）
+  $error = $stmt_u->errorInfo();
+  exit("ErrorQuery:".$error[2]);
+
+} else {
+  //１データのみ抽出の場合はwhileループで取り出さない
+  $row_u = $stmt_u->fetch();
+}
+
 
 //３. 合言葉の認証
 
 if($aikotoba == ""){
-    echo "合言葉を入力してください。（5秒後に）";
-    header( "refresh:3;url=y_event_detail.php?id=".$row["e_id"]);
+    echo "合言葉を入力してください。（5秒後にイベントページに戻ります）";
+    header( "refresh:5;url=y_event_detail.php?id=".$row["e_id"]);
 }else if($aikotoba == $row["password"]){
 
 
@@ -48,14 +65,15 @@ if($aikotoba == ""){
       //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
       $error = $stmt2->errorInfo();
       exit("QueryError:".$error[2]);
-    }else {   
-      header("Location: done.php");
+    }else {  
+      echo '<h2>チェックインしました！</h2><div>'.$row["point"].'ポイントを獲得しました！<div>';
+      header("refresh:5;url=y_event_detail.php?id=".$row["e_id"]);
     }
-
+    
 }else{
-    echo "合言葉が間違っています";
-    header( "refresh:3;url=y_event_detail.php?id=".$row["e_id"]);
+    echo "合言葉が間違っています。合言葉を入れ直してください。（5秒後にイベントページに戻ります）";
+    header( "refresh:5;url=y_event_detail.php?id=".$row["e_id"]);
 }
-//処理終了
-// exit();
+
 ?>
+

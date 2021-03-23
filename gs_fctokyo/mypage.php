@@ -27,27 +27,6 @@ if($status==false) {
   $row = $stmt->fetch();
 }
 
-// //◆poin情報の取得
-// $sql = "SELECT * FROM event_list WHERE user_id=:user_id";
-// $stmt = $pdo->prepare($sql);
-// $stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
-// $status = $stmt->execute();
-
-// //データ表示
-// if($status==false) {
-//   //execute（SQL実行時にエラーがある場合）
-//   $error = $stmt->errorInfo();
-//   exit("ErrorQuery:".$error[2]);
-
-// } else {
-//   //１データのみ抽出の場合はwhileループで取り出さない
-//   $row = $stmt->fetch();
-// }
-
-
-
-
-
 
 //◆参加したイベントとイベント詳細をJOINさせて取得
 $sql_e = "SELECT * FROM event_list LEFT JOIN event ON event_list.event_id = event.e_id WHERE user_id=:u_id ";
@@ -127,9 +106,5 @@ include("l_header.php");
 <?php
 include("y_footer.php");
 ?>
-
-
-
-
 </body>
 </html>
