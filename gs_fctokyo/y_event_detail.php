@@ -68,15 +68,16 @@ if($status_sanka ==false) {
 } else {
   while( $sanka = $stmt_sanka->fetch(PDO::FETCH_ASSOC)){ 
       // $sanka_event .= $sanka["user_name"].'<br>';←これで名前取ってこれる
-      <a href="./mypage.php" target="_blank" rel="noopener noreferrer"><button>マイページ</button></a>
+      if($u_id != $sanka["user_id"]){
+      $sanka_event .= '<a href="./user_page.php?id='.$sanka["user_id"].'">'.$sanka["user_name"].'</a><br>';
+      }else{
+      $sanka_event .= $sanka["user_name"].'<br>';
+      }
+
+      // 人数カウント
       $sanka_count +=  1;
   }
 }
-
-
-
-
-
 
 ?>
 
