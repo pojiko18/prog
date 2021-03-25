@@ -75,6 +75,17 @@ function fileUpload($fname,$path){
     }
 }
 
+
+// 生年月日作成
+function birthdayLoop($start, $end, $selection=''){
+    // echo '<option value="">--</option>';
+    for($i=$start; $i<=$end; $i++){
+        $i = sprintf('%02d', $i);
+        $selected = $i==$selection?'selected':'';
+        echo "<option value=\"{$i}\" $selected>{$i}</option>";
+    }
+}
+
 ?>
 
 

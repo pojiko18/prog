@@ -9,6 +9,8 @@ $id =$_GET["id"];
 //DB接続
 $pdo = dbcon();
 
+
+// ◆ユーザー情報の取得
 $sql = "SELECT * FROM event WHERE e_id=:id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -23,6 +25,54 @@ if($status==false) {
 } else {
   //１データのみ抽出の場合はwhileループで取り出さない
   $row = $stmt->fetch();
+}
+
+//◆参加したイベントとイベント詳細をJOINさせて取得
+$sql_e = "SELECT * FROM event_list LEFT JOIN event ON event_list.event_id = event.e_id WHERE user_id=:u_id AND e_id=:e_id ";
+
+$stmt_e = $pdo->prepare($sql_e);
+$stmt_e->bindValue(':u_id', $u_id, PDO::PARAM_INT);
+$stmt_e->bindValue(':e_id', $e_id, PDO::PARAM_INT);
+$status_e = $stmt_e->execute();
+
+//データ表示
+if($status_e==false) {
+  //execute（SQL実行時にエラーがある場合）
+  $error_e = $stmt_e->errorInfo();
+  exit("ErrorQuery:".$error_e[2]);
+
+} else {
+  $row_e = $stmt_e->fetch();
+}
+
+//◆参加したイベントとユーザー詳細をJOINさせて取得
+$sql_sanka = "SELECT * FROM event_list LEFT JOIN users ON event_list.user_id = users.user_id WHERE event_id=:e_id ";
+
+$stmt_sanka = $pdo->prepare($sql_sanka);
+$stmt_sanka->bindValue(':e_id', $e_id, PDO::PARAM_INT);
+$status_sanka = $stmt_sanka->execute();
+
+//データ表示
+$sanka_event="";
+$sanka_count =0;
+
+if($status_sanka ==false) {
+  //execute（SQL実行時にエラーがある場合）
+  $error_sanka = $stmt_sanka->errorInfo();
+  exit("ErrorQuery:".$error_sanka[2]);
+
+} else {
+  while( $sanka = $stmt_sanka->fetch(PDO::FETCH_ASSOC)){ 
+      // $sanka_event .= $sanka["user_name"].'<br>';←これで名前取ってこれる
+      if($u_id != $sanka["user_id"]){
+      $sanka_event .= '<a href="./user_page.php?id='.$sanka["user_id"].'">'.$sanka["user_name"].'</a><br>';
+      }else{
+      $sanka_event .= $sanka["user_name"].'<br>';
+      }
+
+      // 人数カウント
+      $sanka_count +=  1;
+  }
 }
 
 
@@ -69,10 +119,13 @@ include("l_header.php");
 
 </section>
 
-<!-- 参加者名と人数 -->
-<section>
 
+<!-- 人数と名前表示 -->
+<section>
+<div>参加数：<?=$sanka_count?></div>
+<div>参加者：<?=$sanka_event?></div>
 </section>
+
 
 <!-- 時間あればチャット入れる -->
 <section>

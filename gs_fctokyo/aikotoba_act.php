@@ -6,6 +6,7 @@ $u_id =$_POST["u_id"];
 $point =$_POST["point"];
 $aikotoba =$_POST["aikotoba"];
 
+$bbs =$_POST["bbs"];
 
 // 1. 接続します
 include("funcs.php");

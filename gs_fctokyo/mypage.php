@@ -86,17 +86,30 @@ include("l_header.php");
 
 <!-- 自己紹介 -->
 <section>
+<div><?=$row["user_name"]?>さん</div>
+<!-- アイコン画像を表示させる（未登録：カオナシ） -->
+<?php if($row["img"]==NULL || $row["img"]== 1|| $row["img"]== 2){ ?> 
+<div><img src="./upload/kaonasi-icon.JPG" alt="" width="100"></div>
+<?php }else{?> 
 <div><img src="upload/<?=$row["img"]?>" width="100"></div>
+<?php } ?>
 
-<div><?=$row["user_name"]?></div>
+<!-- 獲得ポイント、自己紹介など表示 -->
+
 
 <div>獲得ポイント数：<?=$point_count?></div>
+<br>
 <div><a href="./mypage_edit.php?id=<?=$row["user_id"]?>">編集</a></div>
-<div>自己紹介入れる</div>
+<br>
+<h2>自己紹介文</h2>
+<div>生年月日　：<?=$row["year"]?>年<?=$row["month"]?>月<?=$row["day"]?>日</div>
+<div>居住地　　：<?=$row["address"]?></div>
+<div>自己紹介　：<?=$row["text"]?></div>
 </section>
 
 <!-- イベント履歴 -->
 <section>
+<h2>イベント参加履歴</h2>
 <div><?=$view_event?></div>
 
 </section>
